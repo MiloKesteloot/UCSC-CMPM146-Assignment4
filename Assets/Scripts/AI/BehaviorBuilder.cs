@@ -4,29 +4,38 @@ public class BehaviorBuilder
 {
     public static BehaviorTree MakeTree(EnemyController agent)
     {
+        Transform secretMeetingSpot = AIWaypointManager.Instance.Get(3).transform;
         BehaviorTree result = null;
         if (agent.monster == "warlock")
         {
             result = new Sequence(new BehaviorTree[] {
-                                        new MoveToPlayer(agent.GetAction("attack").range),
-                                        new Attack(),
+                                        new GoTo(secretMeetingSpot, 4f),
                                         new PermaBuff(),
-                                        new Heal(),
-                                        new Buff()
-                                     });
+                                        new Heal()
+                                    });
         }
         else if (agent.monster == "zombie")
         {
-            result = new Sequence(new BehaviorTree[] {
-                                       new MoveToPlayer(agent.GetAction("attack").range),
-                                       new Attack()
+            result = new Selector(new BehaviorTree[] {
+                                        new Sequence(new BehaviorTree[] {
+                                            new NearbyEnemiesQuery(5, 7f),
+                                            new MoveToPlayer(4f),
+                                            new Attack()
+                                        }),
+                                        new GoTo(secretMeetingSpot, 4f)
                                      });
         }
         else
         {
-            result = new Sequence(new BehaviorTree[] {
-                                       new MoveToPlayer(agent.GetAction("attack").range),
-                                       new Attack()
+            result = new Selector(new BehaviorTree[] {
+                                        new Sequence(new BehaviorTree[] {
+                                            new NearbyEnemiesQuery(5, 7f),
+                                            //new GoTowards(zombie),
+                                            //new 
+                                            new MoveToPlayer(4f),
+                                            new Attack()
+                                        }),
+                                        new GoTo(secretMeetingSpot, 4f)
                                      });
         }
 

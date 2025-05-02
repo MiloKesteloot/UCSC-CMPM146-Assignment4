@@ -13,6 +13,7 @@ public class AIWaypoint : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Debug.Log(gameObject.name);
         position = transform.position;
         AIWaypointManager.Instance.AddWaypoint(this);
     }
