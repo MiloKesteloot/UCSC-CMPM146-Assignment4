@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
     public HealthBar healthui;
     public bool dead;
 
-    public Dictionary<string, object> blackboard;
+    public Dictionary<string, dynamic> blackboard;
 
     public Dictionary<string, EnemyAction> actions;
     public Dictionary<string, int> effects;

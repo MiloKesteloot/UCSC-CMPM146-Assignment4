@@ -18,7 +18,7 @@ public class BehaviorBuilder
         {
             result = new Selector(new BehaviorTree[] {
                                         new Sequence(new BehaviorTree[] {
-                                            new NearbyEnemiesQuery(5, 7f),
+                                            new NearbyEnemiesQuery(2, 7f),
                                             new MoveToPlayer(4f),
                                             new Attack()
                                         }),
@@ -29,10 +29,9 @@ public class BehaviorBuilder
         {
             result = new Selector(new BehaviorTree[] {
                                         new Sequence(new BehaviorTree[] {
-                                            new NearbyEnemiesQuery(5, 7f),
-                                            // new GoTowards(zombie, 1, 1),
-                                            //new 
-                                            new MoveToPlayer(4f),
+                                            new NearbyEnemiesQuery(2, 7f),
+                                            new GetNearestEnemy("zombie", 7f),
+                                            new FollowToTarget(4f),
                                             new Attack()
                                         }),
                                         new GoTo(secretMeetingSpot, 4f)

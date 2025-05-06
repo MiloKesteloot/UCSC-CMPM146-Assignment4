@@ -7,23 +7,31 @@ public class GetNearestEnemy : BehaviorTree
     public override Result Run()
     {
         var nearby = GameManager.Instance.GetEnemiesInRange(agent.transform.position, distance);
-        EnemyController closestEnemy = null;
+        GameObject closestEnemy = null;
         float closestDistance = -1;
         foreach (var enemy in nearby)
         {
-            EnemyController ec = enemy.GetComponent<EnemyController>();
-            float dist = (ec.transform.position - agent.transform.position).magnitude;
-            if (ec.monster == enemyType && (closestEnemy == null || dist < closestDistance)) {
-                closestEnemy = ec;
+            float dist = (enemy.transform.position - agent.transform.position).magnitude;
+            if (enemy.GetComponent<EnemyController>().monster == enemyType && (closestEnemy == null || dist < closestDistance)) {
+                closestEnemy = enemy;
                 closestDistance = dist;
             }
         }
-        agent.blackboard.Add("closestenemy-" + enemyType, closestEnemy);
-        if (closestEnemy == null) {
+
+        if (closestEnemy == null)
+        {
             return Result.FAILURE;
-        } else {
-            return Result.SUCCESS;            
         }
+
+        string key = "closest-" + enemyType;
+        if (agent.blackboard.ContainsKey(key)) {
+            agent.blackboard[key] = closestEnemy;
+        } else
+        {
+            agent.blackboard.Add("closest-" + enemyType, closestEnemy);
+        }
+
+        return Result.SUCCESS;            
     }
 
     public GetNearestEnemy(string enemyType, float distance) : base()
@@ -34,6 +42,6 @@ public class GetNearestEnemy : BehaviorTree
 
     public override BehaviorTree Copy()
     {
-        return new Attack();
+        return new GetNearestEnemy(enemyType, distance);
     }
 }
