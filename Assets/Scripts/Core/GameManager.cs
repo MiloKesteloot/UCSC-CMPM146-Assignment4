@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public class GameManager 
 {
@@ -34,6 +35,8 @@ public class GameManager
     public EnemySpriteManager enemySpriteManager;
     public PlayerSpriteManager playerSpriteManager;
     public RelicIconManager relicIconManager;
+
+    public Dictionary<string, object> blackboard;
 
     private List<GameObject> enemies;
     public int enemy_count { get { return enemies.Count; } }
@@ -70,6 +73,7 @@ public class GameManager
     private GameManager()
     {
         enemies = new List<GameObject>();
+        blackboard = new Dictionary<string, object>();
     }
 
     public float WinTime()

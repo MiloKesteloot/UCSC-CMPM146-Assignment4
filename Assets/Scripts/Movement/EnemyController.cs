@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
     public HealthBar healthui;
     public bool dead;
 
+    public Dictionary<string, object> blackboard;
+
     public Dictionary<string, EnemyAction> actions;
     public Dictionary<string, int> effects;
     public GameObject strength_pip;
@@ -20,6 +22,7 @@ public class EnemyController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        blackboard = new();
         
         target = GameManager.Instance.player.transform;
         hp.OnDeath += Die;

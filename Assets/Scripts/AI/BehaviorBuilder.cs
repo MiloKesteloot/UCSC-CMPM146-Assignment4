@@ -25,12 +25,12 @@ public class BehaviorBuilder
                                         new GoTo(secretMeetingSpot, 4f)
                                      });
         }
-        else
+        else if (agent.monster == "skeleton")
         {
             result = new Selector(new BehaviorTree[] {
                                         new Sequence(new BehaviorTree[] {
                                             new NearbyEnemiesQuery(5, 7f),
-                                            //new GoTowards(zombie),
+                                            // new GoTowards(zombie, 1, 1),
                                             //new 
                                             new MoveToPlayer(4f),
                                             new Attack()
