@@ -20,6 +20,7 @@ public class GetNearestEnemy : BehaviorTree
 
         if (closestEnemy == null)
         {
+            //Debug.Log("Can't find a Leader");
             return Result.FAILURE;
         }
 
@@ -30,7 +31,7 @@ public class GetNearestEnemy : BehaviorTree
         {
             agent.blackboard.Add(key, closestEnemy);
         }
-
+        Debug.Log("Found Leader");
         return Result.SUCCESS;            
     }
 

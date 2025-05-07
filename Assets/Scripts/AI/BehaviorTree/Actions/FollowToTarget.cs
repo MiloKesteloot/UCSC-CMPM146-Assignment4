@@ -19,7 +19,8 @@ public class FollowToTarget : BehaviorTree
 
         if (leader == null)
         {
-            return Result.SUCCESS; // TODO check if this should be true. If there are no zombies but we are attacking, I think we should still attack
+            Debug.Log("Leader is null");
+            return Result.FAILURE; // TODO check if this should be true. If there are no zombies but we are attacking, I think we should still attack
         }
 
         Vector3 targetDirection = target.position - agent.transform.position;
@@ -33,7 +34,8 @@ public class FollowToTarget : BehaviorTree
         }
         else if (targetDirection.magnitude < leaderDirection.magnitude)
         {
-            agent.GetComponent<Unit>().movement = new Vector2(0, 0);
+            Debug.Log("Going backwards");
+            agent.GetComponent<Unit>().movement = -targetDirection.normalized;
             return Result.IN_PROGRESS;
         }
         else
