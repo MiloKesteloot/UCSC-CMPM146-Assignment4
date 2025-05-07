@@ -74,7 +74,7 @@ public class GameManager
     {
         enemies = new List<GameObject>();
         blackboard = new Dictionary<string, object>() {
-            { "ATTACK!!!", false }
+            { "ATTACK", false }
         };
     }
 

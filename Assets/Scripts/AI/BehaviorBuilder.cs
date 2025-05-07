@@ -20,16 +20,16 @@ public class BehaviorBuilder
             result = new Selector(new BehaviorTree[] {
                                         new Sequence(new BehaviorTree[] {
                                             new Selector(new BehaviorTree[] {
-                                                new CheckFlag("ATTACK!!!", true),
+                                                new CheckFlag("ATTACK", true),
                                                 new NearbyEnemiesQuery(6, 7f),
                                             }),
-                                            new SetFlag("ATTACK!!!", true),
+                                            new SetFlag("ATTACK", true),
                                             
                                             new MoveToPlayer(1f),
                                             new Attack()
                                         }),
                                         new Sequence(new BehaviorTree[] {
-                                            new CheckFlag("ATTACK!!!", false),
+                                            new CheckFlag("ATTACK", false),
                                             new GoTo(secretMeetingSpot, 4f)
                                         })
                                      });
@@ -39,10 +39,10 @@ public class BehaviorBuilder
             result = new Selector(new BehaviorTree[] {
                                         new Sequence(new BehaviorTree[] {
                                             new Selector(new BehaviorTree[] {
-                                                new CheckFlag("ATTACK!!!", true),
+                                                new CheckFlag("ATTACK", true),
                                                 new NearbyEnemiesQuery(6, 7f),
                                             }),
-                                            new SetFlag("ATTACK!!!", true),
+                                            new SetFlag("ATTACK", true),
 
                                             new GetNearestEnemy("zombie", 7f),
                                             new FollowToTarget("closest-zombie", 4f),
@@ -50,7 +50,7 @@ public class BehaviorBuilder
                                             new Attack()
                                         }),
                                         new Sequence(new BehaviorTree[] {
-                                            new CheckFlag("ATTACK!!!", false),
+                                            new CheckFlag("ATTACK", false),
                                             new GoTo(secretMeetingSpot, 4f)
                                         })
                                      });
