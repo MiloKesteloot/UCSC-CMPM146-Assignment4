@@ -4,37 +4,55 @@ public class BehaviorBuilder
 {
     public static BehaviorTree MakeTree(EnemyController agent)
     {
-        Transform secretMeetingSpot = AIWaypointManager.Instance.Get(3).transform;
+        Transform secretMeetingSpot = AIWaypointManager.Instance.Get(2).transform;
         BehaviorTree result = null;
         if (agent.monster == "warlock")
         {
             result = new Sequence(new BehaviorTree[] {
-                                        new GoTo(secretMeetingSpot, 4f),
-                                        new PermaBuff(),
-                                        new Heal()
+                                        // new GoTo(secretMeetingSpot, 4f),
+                                        // new PermaBuff(),
+                                        // new Heal()
+                                        new MoveToPlayer(1f),
                                     });
         }
         else if (agent.monster == "zombie")
         {
             result = new Selector(new BehaviorTree[] {
                                         new Sequence(new BehaviorTree[] {
-                                            new NearbyEnemiesQuery(2, 7f),
-                                            new MoveToPlayer(4f),
+                                            new Selector(new BehaviorTree[] {
+                                                new CheckFlag("ATTACK!!!", true),
+                                                new NearbyEnemiesQuery(6, 7f),
+                                            }),
+                                            new SetFlag("ATTACK!!!", true),
+                                            
+                                            new MoveToPlayer(1f),
                                             new Attack()
                                         }),
-                                        new GoTo(secretMeetingSpot, 4f)
+                                        new Sequence(new BehaviorTree[] {
+                                            new CheckFlag("ATTACK!!!", false),
+                                            new GoTo(secretMeetingSpot, 4f)
+                                        })
                                      });
         }
         else if (agent.monster == "skeleton")
         {
             result = new Selector(new BehaviorTree[] {
                                         new Sequence(new BehaviorTree[] {
-                                            new NearbyEnemiesQuery(2, 7f),
+                                            new Selector(new BehaviorTree[] {
+                                                new CheckFlag("ATTACK!!!", true),
+                                                new NearbyEnemiesQuery(6, 7f),
+                                            }),
+                                            new SetFlag("ATTACK!!!", true),
+
                                             new GetNearestEnemy("zombie", 7f),
-                                            new FollowToTarget(4f),
+                                            new FollowToTarget("closest-zombie", 4f),
+                                            new MoveToPlayer(1f),
                                             new Attack()
                                         }),
-                                        new GoTo(secretMeetingSpot, 4f)
+                                        new Sequence(new BehaviorTree[] {
+                                            new CheckFlag("ATTACK!!!", false),
+                                            new GoTo(secretMeetingSpot, 4f)
+                                        })
                                      });
         }
 

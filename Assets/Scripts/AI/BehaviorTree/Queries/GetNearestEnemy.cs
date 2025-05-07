@@ -28,7 +28,7 @@ public class GetNearestEnemy : BehaviorTree
             agent.blackboard[key] = closestEnemy;
         } else
         {
-            agent.blackboard.Add("closest-" + enemyType, closestEnemy);
+            agent.blackboard.Add(key, closestEnemy);
         }
 
         return Result.SUCCESS;            

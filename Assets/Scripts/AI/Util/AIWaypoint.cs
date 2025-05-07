@@ -9,11 +9,11 @@ public class AIWaypoint : MonoBehaviour
     public Vector3 position;
     public Type type;
     
+    static bool p = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log(gameObject.name);
         position = transform.position;
         AIWaypointManager.Instance.AddWaypoint(this);
     }

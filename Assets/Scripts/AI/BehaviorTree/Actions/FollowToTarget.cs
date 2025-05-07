@@ -7,18 +7,19 @@ public class FollowToTarget : BehaviorTree
     float distanceFromTarget;
     bool in_progress;
     Vector3 start_point;
+    string key;
 
     public override Result Run() {
         if (!in_progress)
         {
             in_progress = true;
             start_point = agent.transform.position;
-            leader = agent.blackboard["closest-zombie"].transform;
+            leader = agent.blackboard[key].transform;
         }
 
         if (leader == null)
         {
-            return Result.FAILURE;
+            return Result.SUCCESS; // TODO check if this should be true. If there are no zombies but we are attacking, I think we should still attack
         }
 
         Vector3 targetDirection = target.position - agent.transform.position;
@@ -42,13 +43,14 @@ public class FollowToTarget : BehaviorTree
         }
     }
 
-    public FollowToTarget(float distanceFromTarget) : base() {
+    public FollowToTarget(string key, float distanceFromTarget) : base() {
         this.target = GameManager.Instance.player.transform;
+        this.key = key;
         this.distanceFromTarget = distanceFromTarget;
         this.in_progress = false;
     }
 
     public override BehaviorTree Copy() {
-        return new FollowToTarget(distanceFromTarget);
+        return new FollowToTarget(key, distanceFromTarget);
     }
 }

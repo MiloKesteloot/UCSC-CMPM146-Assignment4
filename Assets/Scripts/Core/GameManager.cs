@@ -73,7 +73,9 @@ public class GameManager
     private GameManager()
     {
         enemies = new List<GameObject>();
-        blackboard = new Dictionary<string, object>();
+        blackboard = new Dictionary<string, object>() {
+            { "ATTACK!!!", false }
+        };
     }
 
     public float WinTime()

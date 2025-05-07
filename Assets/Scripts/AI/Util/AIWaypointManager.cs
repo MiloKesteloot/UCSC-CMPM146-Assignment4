@@ -5,7 +5,7 @@ using System.Linq;
 
 public class AIWaypointManager
 {
-    private List<AIWaypoint> waypoints;
+    public List<AIWaypoint> waypoints;
 
     private static AIWaypointManager theInstance;
     public static AIWaypointManager Instance
@@ -25,7 +25,11 @@ public class AIWaypointManager
 
     public void AddWaypoint(AIWaypoint wp)
     {
-        waypoints.Add(wp);
+        int i = int.Parse(new string(wp.gameObject.name.Where(char.IsDigit).ToArray()));
+        while (waypoints.Count < i) {
+            waypoints.Add(null);
+        }
+        waypoints[i-1] = wp;
     }
 
     public AIWaypoint GetClosest(Vector3 point)
