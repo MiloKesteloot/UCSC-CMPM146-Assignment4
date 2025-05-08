@@ -8,6 +8,7 @@ public class FollowToTarget : BehaviorTree
     bool in_progress;
     Vector3 start_point;
     string key;
+    float buffer;
 
     public override Result Run() {
         if (!in_progress)
@@ -17,9 +18,10 @@ public class FollowToTarget : BehaviorTree
             leader = agent.blackboard[key].transform;
         }
 
-        if (leader == null)
+        if (agent.blackboard[key] == null)
         {
             Debug.Log("Leader is null");
+            in_progress = false;
             return Result.FAILURE; // TODO check if this should be true. If there are no zombies but we are attacking, I think we should still attack
         }
 
@@ -32,10 +34,14 @@ public class FollowToTarget : BehaviorTree
             in_progress = false;
             return Result.SUCCESS;
         }
-        else if (targetDirection.magnitude < leaderDirection.magnitude)
+        else if ((targetDirection.magnitude < leaderDirection.magnitude) && (followDirection.magnitude < buffer))
         {
             Debug.Log("Going backwards");
             agent.GetComponent<Unit>().movement = -targetDirection.normalized;
+            return Result.IN_PROGRESS;
+        }
+        else if (followDirection.magnitude < buffer) {
+            agent.GetComponent<Unit>().movement = new Vector2(0, 0);
             return Result.IN_PROGRESS;
         }
         else
@@ -45,14 +51,15 @@ public class FollowToTarget : BehaviorTree
         }
     }
 
-    public FollowToTarget(string key, float distanceFromTarget) : base() {
+    public FollowToTarget(string key, float distanceFromTarget, float buffer) : base() {
         this.target = GameManager.Instance.player.transform;
         this.key = key;
         this.distanceFromTarget = distanceFromTarget;
         this.in_progress = false;
+        this.buffer = buffer;
     }
 
     public override BehaviorTree Copy() {
-        return new FollowToTarget(key, distanceFromTarget);
+        return new FollowToTarget(key, distanceFromTarget, buffer);
     }
 }

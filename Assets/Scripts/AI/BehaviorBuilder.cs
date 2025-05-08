@@ -8,23 +8,47 @@ public class BehaviorBuilder
         BehaviorTree result = null;
         if (agent.monster == "warlock")
         {
-            result = new Sequence(new BehaviorTree[] {
-                                        // new GoTo(secretMeetingSpot, 4f),
-                                        // new PermaBuff(),
-                                        // new Heal()
-                                        new MoveToPlayer(1f),
+            result = new Selector(new BehaviorTree[] {
+                                        new Sequence(new BehaviorTree[] {
+                                            new CheckFlag("ATTACK", false),
+                                            new CheckNotAtSpot(secretMeetingSpot, 4f),
+                                            new GoTo(secretMeetingSpot, 4f)
+                                        }),
+                                        new Sequence(new BehaviorTree[] {
+                                            new AbilityReadyQuery("heal"),
+                                            // new FindHurtEnemy(),
+                                            new Heal()
+                                        }),
+                                        new Sequence(new BehaviorTree[] {
+                                            new AbilityReadyQuery("permabuff"),
+                                            // new FindLowestBuffEnemy(),
+                                            new PermaBuff()
+                                        }),
+                                        /*new Sequence(new BehaviorTree[] {
+                                            // new CloseToPlayer(10f),
+                                            // new RunAway(10f)
+                                        }),*/
+                                        new Sequence(new BehaviorTree[] {
+                                            new CheckFlag("ATTACK", true),
+                                            new Selector(new BehaviorTree[] {
+                                                new Sequence(new BehaviorTree[] {
+                                                    new AbilityReadyQuery("buff"),
+                                                    // new FindPlayerClosestEnemy(),
+                                                    new Buff()
+                                                }),
+                                                new Sequence(new BehaviorTree[] {
+                                                    new GetNearestEnemy("zombie", 900f),
+                                                    new FollowToTarget("closest-zombie", 10f, 4f),
+                                                }),
+                                            }),
+                                        })
                                     });
         }
         else if (agent.monster == "zombie")
         {
             result = new Selector(new BehaviorTree[] {
                                         new Sequence(new BehaviorTree[] {
-                                            new Selector(new BehaviorTree[] {
-                                                new CheckFlag("ATTACK", true),
-                                                //new NearbyEnemiesQuery(3, 7f),
-                                            }),
-                                            new SetFlag("ATTACK", true),
-                                            
+                                            new CheckFlag("ATTACK", true),
                                             new MoveToPlayer(1f),
                                             new Attack()
                                         }),
@@ -45,7 +69,7 @@ public class BehaviorBuilder
                                             new SetFlag("ATTACK", true),
 
                                             new GetNearestEnemy("zombie", 900f),
-                                            new FollowToTarget("closest-zombie", 4f),
+                                            new FollowToTarget("closest-zombie", 5f, 1f),
                                             new MoveToPlayer(1f),
                                             new Attack()
                                         }),

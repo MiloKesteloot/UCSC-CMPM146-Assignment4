@@ -27,6 +27,7 @@ public class GetNearestEnemy : BehaviorTree
         string key = "closest-" + enemyType;
         if (agent.blackboard.ContainsKey(key)) {
             agent.blackboard[key] = closestEnemy;
+            Debug.Log("Found new Leader " + closestEnemy.transform);
         } else
         {
             agent.blackboard.Add(key, closestEnemy);
