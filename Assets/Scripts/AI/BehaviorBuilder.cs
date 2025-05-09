@@ -16,7 +16,7 @@ public class BehaviorBuilder
                                         }),
                                         new Sequence(new BehaviorTree[] {
                                             new AbilityReadyQuery("heal"),
-                                            // new FindHurtEnemy(),
+                                            new GetHurtEnemy(5f),
                                             new Heal()
                                         }),
                                         new Sequence(new BehaviorTree[] {
@@ -38,7 +38,7 @@ public class BehaviorBuilder
                                                 }),
                                                 new Sequence(new BehaviorTree[] {
                                                     new GetNearestEnemy("zombie", 900f),
-                                                    new FollowToTarget("closest-zombie", 10f, 4f),
+                                                    new FollowToTarget("closest-zombie", 10f, 3f),
                                                 }),
                                             }),
                                         })
