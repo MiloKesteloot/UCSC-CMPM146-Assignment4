@@ -10,11 +10,6 @@ public class BehaviorBuilder
         {
             result = new Selector(new BehaviorTree[] {
                                         new Sequence(new BehaviorTree[] {
-                                            new CheckFlag("ATTACK", false),
-                                            new CheckNotAtSpot(secretMeetingSpot, 4f),
-                                            new GoTo(secretMeetingSpot, 4f)
-                                        }),
-                                        new Sequence(new BehaviorTree[] {
                                             new AbilityReadyQuery("heal"),
                                             new GetHurtEnemy(5f, 5f),
                                             new Heal()
@@ -24,16 +19,17 @@ public class BehaviorBuilder
                                             new GetLowestBuff("skeleton", 5f),
                                             new PermaBuff()
                                         }),
-                                        /*new Sequence(new BehaviorTree[] {
-                                            // new CloseToPlayer(10f),
-                                            // new RunAway(10f)
-                                        }),*/
+                                        new Sequence(new BehaviorTree[] {
+                                            new CheckFlag("ATTACK", false),
+                                            new MoveToPlayer(40),
+                                            new MoveFromPlayer(35)
+                                        }),
                                         new Sequence(new BehaviorTree[] {
                                             new CheckFlag("ATTACK", true),
                                             new Selector(new BehaviorTree[] {
                                                 new Sequence(new BehaviorTree[] {
                                                     new AbilityReadyQuery("buff"),
-                                                    // new FindPlayerClosestEnemy(),
+                                                    new GetClosestToPlayer(10f),
                                                     new Buff()
                                                 }),
                                                 new Sequence(new BehaviorTree[] {

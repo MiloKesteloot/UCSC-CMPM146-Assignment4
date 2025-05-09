@@ -4,7 +4,7 @@ public class PermaBuff : BehaviorTree
 {
     public override Result Run()
     {
-        var target = GameManager.Instance.GetClosestOtherEnemy(agent.gameObject);
+        var target = agent.blackboard["weak-enemy"];
         EnemyAction act = agent.GetAction("permabuff");
         if (act == null) return Result.FAILURE;
 
