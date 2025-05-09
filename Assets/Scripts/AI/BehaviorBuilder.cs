@@ -47,15 +47,32 @@ public class BehaviorBuilder
         else if (agent.monster == "zombie")
         {
             result = new Selector(new BehaviorTree[] {
+                                        
                                         new Sequence(new BehaviorTree[] {
-                                            new CheckFlag("ATTACK", true),
-                                            new MoveToPlayer(1f),
+                                            new Selector(new BehaviorTree[] {
+                                                new CheckFlag("ATTACK", true),
+                                                new NearbyEnemiesQuery(20, 9999f),
+                                            }),
+                                            new SetFlag("ATTACK", true),
+                                            new MoveToPlayer(agent.GetAction("attack").range),
                                             new Attack()
                                         }),
                                         new Sequence(new BehaviorTree[] {
                                             new CheckFlag("ATTACK", false),
-                                            new GoTo(secretMeetingSpot, 4f)
-                                        })
+                                            new MoveToPlayer(40),
+                                            new MoveFromPlayer(35)
+                                            // new GoTo(secretMeetingSpot, 4f)
+                                        }),
+
+                                        // new Sequence(new BehaviorTree[] {
+                                        //     new CheckFlag("ATTACK", true),
+                                        //     new MoveToPlayer(1f),
+                                        //     new Attack()
+                                        // }),
+                                        // new Sequence(new BehaviorTree[] {
+                                        //     new CheckFlag("ATTACK", false),
+                                        //     new GoTo(secretMeetingSpot, 4f)
+                                        // })
                                      });
         }
         else if (agent.monster == "skeleton")
@@ -64,19 +81,21 @@ public class BehaviorBuilder
                                         new Sequence(new BehaviorTree[] {
                                             new Selector(new BehaviorTree[] {
                                                 new CheckFlag("ATTACK", true),
-                                                new NearbyEnemiesQuery(3, 7f),
+                                                new NearbyEnemiesQuery(20, 9999f),
                                             }),
                                             new SetFlag("ATTACK", true),
 
-                                            new GetNearestEnemy("zombie", 900f),
-                                            new FollowToTarget("closest-zombie", 5f, 1f),
-                                            new MoveToPlayer(1f),
+                                            new GetNearestEnemy("zombie", 9999f),
+                                            new FollowToTarget("closest-zombie", 10f, 1f),
+                                            new MoveToPlayer(agent.GetAction("attack").range),
                                             new Attack()
                                         }),
                                         new Sequence(new BehaviorTree[] {
                                             new CheckFlag("ATTACK", false),
-                                            new GoTo(secretMeetingSpot, 4f)
-                                        })
+                                            new MoveToPlayer(40),
+                                            new MoveFromPlayer(35)
+                                            // new GoTo(secretMeetingSpot, 4f)
+                                        }),
                                      });
         }
 
