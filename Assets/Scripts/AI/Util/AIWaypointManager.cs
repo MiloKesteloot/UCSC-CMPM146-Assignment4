@@ -5,7 +5,7 @@ using System.Linq;
 
 public class AIWaypointManager
 {
-    public List<AIWaypoint> waypoints;
+    private List<AIWaypoint> waypoints;
 
     private static AIWaypointManager theInstance;
     public static AIWaypointManager Instance
