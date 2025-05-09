@@ -3,7 +3,7 @@ using UnityEngine;
 public class GetHurtEnemy : BehaviorTree
 {
     float distance;
-    string enemyType;
+    float minHeal;
     public override Result Run()
     {
         var nearby = GameManager.Instance.GetEnemiesInRange(agent.transform.position, distance);
@@ -19,7 +19,7 @@ public class GetHurtEnemy : BehaviorTree
             }
         }
 
-        if (hurtEnemy == null || mosthurt < 15)
+        if (hurtEnemy == null || mosthurt < minHeal)
         {
             //Debug.Log("Can't find a Leader");
             return Result.FAILURE;
@@ -36,13 +36,14 @@ public class GetHurtEnemy : BehaviorTree
         return Result.SUCCESS;            
     }
 
-    public GetHurtEnemy(float distance) : base()
+    public GetHurtEnemy(float minHeal, float distance) : base()
     {
+        this.minHeal = minHeal;
         this.distance = distance;
     }
 
     public override BehaviorTree Copy()
     {
-        return new GetHurtEnemy(distance);
+        return new GetHurtEnemy(minHeal, distance);
     }
 }

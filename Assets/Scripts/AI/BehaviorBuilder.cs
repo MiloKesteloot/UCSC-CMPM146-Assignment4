@@ -16,12 +16,12 @@ public class BehaviorBuilder
                                         }),
                                         new Sequence(new BehaviorTree[] {
                                             new AbilityReadyQuery("heal"),
-                                            new GetHurtEnemy(5f),
+                                            new GetHurtEnemy(5f, 5f),
                                             new Heal()
                                         }),
                                         new Sequence(new BehaviorTree[] {
                                             new AbilityReadyQuery("permabuff"),
-                                            // new FindLowestBuffEnemy(),
+                                            new GetLowestBuff("skeleton", 5f),
                                             new PermaBuff()
                                         }),
                                         /*new Sequence(new BehaviorTree[] {

@@ -4,7 +4,7 @@ public class Buff : BehaviorTree
 {
     public override Result Run()
     {
-        var target = GameManager.Instance.GetClosestOtherEnemy(agent.gameObject);
+        var target = agent.blackboard["weak-enemy"];
         EnemyAction act = agent.GetAction("buff");
         if (act == null) return Result.FAILURE;
         
