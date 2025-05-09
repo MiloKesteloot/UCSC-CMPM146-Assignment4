@@ -11,12 +11,14 @@ public class BehaviorBuilder
             result = new Selector(new BehaviorTree[] {
                                         new Sequence(new BehaviorTree[] {
                                             new AbilityReadyQuery("heal"),
-                                            new GetHurtEnemy(5f, 5f),
+                                            new GetHurtEnemy(5f, 100f),
+                                             new GoTo(agent.blackboard["hurt-skeleton"].transform, 5f),
                                             new Heal()
                                         }),
                                         new Sequence(new BehaviorTree[] {
                                             new AbilityReadyQuery("permabuff"),
-                                            new GetLowestBuff("skeleton", 5f),
+                                            new GetLowestBuff("skeleton", 100f),
+                                            new GoTo(agent.blackboard["weak-skeleton"].transform, 5f),
                                             new PermaBuff()
                                         }),
                                         new Sequence(new BehaviorTree[] {
@@ -29,7 +31,7 @@ public class BehaviorBuilder
                                             new Selector(new BehaviorTree[] {
                                                 new Sequence(new BehaviorTree[] {
                                                     new AbilityReadyQuery("buff"),
-                                                    new GetClosestToPlayer(10f),
+                                                    new GetClosestToPlayer(100f),
                                                     new Buff()
                                                 }),
                                                 new Sequence(new BehaviorTree[] {
