@@ -12,13 +12,13 @@ public class BehaviorBuilder
                                         new Sequence(new BehaviorTree[] {
                                             new AbilityReadyQuery("heal"),
                                             new GetHurtEnemy(5f, 100f),
-                                             new GoTo(agent.blackboard["hurt-skeleton"].transform, 5f),
+                                            new GoToEnemy("hurt-enemy", 5f),
                                             new Heal()
                                         }),
                                         new Sequence(new BehaviorTree[] {
                                             new AbilityReadyQuery("permabuff"),
                                             new GetLowestBuff("skeleton", 100f),
-                                            new GoTo(agent.blackboard["weak-skeleton"].transform, 5f),
+                                            new GoToEnemy("weak-enemy", 5f),
                                             new PermaBuff()
                                         }),
                                         new Sequence(new BehaviorTree[] {

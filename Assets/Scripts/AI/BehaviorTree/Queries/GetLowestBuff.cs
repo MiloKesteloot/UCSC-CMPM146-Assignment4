@@ -31,7 +31,7 @@ public class GetLowestBuff : BehaviorTree
         {
             agent.blackboard.Add(key, weakEnemy);
         }
-        Debug.Log("Found Leader");
+        Debug.Log("Found weak enemy");
         return Result.SUCCESS;            
     }
 

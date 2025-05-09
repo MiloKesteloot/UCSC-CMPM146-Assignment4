@@ -9,6 +9,7 @@ public class PermaBuff : BehaviorTree
         if (act == null) return Result.FAILURE;
 
         bool success = act.Do(target.transform);
+        Debug.Log("Buffed enemy " + ((EnemyAttack)target.GetComponent<EnemyController>().GetAction("attack")).StrengthFactor);
         return (success ? Result.SUCCESS : Result.FAILURE);
     }
 
